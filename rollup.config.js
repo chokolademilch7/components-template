@@ -14,19 +14,18 @@ const inputFiles = (dir, expands) => {
 }
 
 const inputDir = (dir, expands) => {
-  let rets = [];
+  let ret = {};
   fs.readdirSync(dir).forEach(dirname => {
-    rets = rets.concat(inputFiles(`${dir}/${dirname}`, expands));
+    ret[dirname] = inputFiles(`${dir}/${dirname}`, expands)[0];
   });
-  return rets;
+  return ret;
 }
 
 export default {
-  // input: inputFiles('src/components/button-sample', ['.js', '.ts']),
   input: inputDir('src/components', ['.js', '.ts']),
   output: {
     dir: 'public/build',
-    entryFileNames: '[name].js',
+    entryFileNames: 'a100-[name].mjs',
     format: 'esm'
   },
   plugins: [

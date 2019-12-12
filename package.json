@@ -8,7 +8,7 @@
   "scripts": {
     "clear": "rm -rf public/build",
     "build": "run-s build:css build:js",
-    "dev": "run-p debug:build:css debug:build:js",
+    "dev": "run-s clear build:css && run-p debug:build:css debug:build:js",
     "start": "sirv public",
     "debug:build:js": "rollup -c -w",
     "debug:build:css": "postcss \"src/components/*/*.pcss\" --dir . --base . --ext gen.css --verbose -w",

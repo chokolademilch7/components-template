@@ -1,1 +1,2 @@
-import './build/button-sample.js';
+import './build/a100-button-sample.mjs';
+import './build/a100-title.mjs';
