@@ -14,8 +14,11 @@ const inputFiles = (dir, expands) => {
 }
 
 const inputDir = (dir, expands) => {
-  const dirnames = fs.readdirSync(dir).map(dirname => inputFiles(`${dir}/${dirname}`, expands)).flat();
-  return dirnames;
+  let rets = [];
+  fs.readdirSync(dir).forEach(dirname => {
+    rets = rets.concat(inputFiles(`${dir}/${dirname}`, expands));
+  });
+  return rets;
 }
 
 export default {
