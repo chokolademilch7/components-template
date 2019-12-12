@@ -1,33 +1,44 @@
-import resolve from 'rollup-plugin-node-resolve';
+import fs from 'fs';
 import commonjs from 'rollup-plugin-commonjs';
+import style from 'rollup-plugin-lit-html-style';
 import livereload from 'rollup-plugin-livereload';
-import babel from 'rollup-plugin-babel';
-import terser from 'rollup-plugin-terser';
+import resolve from 'rollup-plugin-node-resolve';
+import { terser } from 'rollup-plugin-terser';
+import typescript from 'rollup-plugin-typescript';
 
 const production = !process.env.ROLLUP_WATCH;
 
+const inputFiles = (dir, expands) => {
+  const regex = new RegExp(expands.map(epd => `${epd}$`).join('|'));
+  return fs.readdirSync(dir).filter(fn => fn.match(regex)).map(fn => `${dir}/${fn}`);
+}
+
+const inputDir = (dir, expands) => {
+  const dirnames = fs.readdirSync(dir).map(dirname => inputFiles(`${dir}/${dirname}`, expands));
+  return dirnames;
+}
+
 export default {
-  input: 'src/index.js',
+  input: inputFiles('src/components/button-sample', ['.js', '.ts']),
   output: {
-    sourcemap: true,
-    file: 'public/build/bundle.js',
+    dir: 'public/build',
+    entryFileNames: '[name].js',
     format: 'iife'
   },
   plugins: [
+    typescript(),
+    style({
+      include: ['src/components/*/*.css']
+    }),
     resolve({
       browser: true
     }),
     commonjs(),
-    babel(),
     !production && serve(),
     !production && livereload('public'),
     production && terser()
-  ],
-  watch: {
-    cleanScreen: false
-  }
-};
-
+  ]
+}
 
 function serve() {
   let started = false;
