@@ -1,6 +1,10 @@
-# a100-components
+# components-template
 
 Quick Start
+```
+npx degit chokolademilch7/components-template [names]
+```
+
 ```
 npm i
 or
@@ -24,7 +28,3 @@ src/index.js
 public/index.html
 作成したコンポーネントの名前のタグを書いてください  
 `<hoge-button></hoge-button>`
-
-後々この辺を自動化するので一旦これで書いてください。
-一旦はアトミックでいうところの`Atoms`をコンポーネント化しましょう
-
