@@ -1,4 +1,5 @@
-import { LitElement, html, css } from 'lit-element';
+import { LitElement, html } from 'lit-element';
+import style from './button-sample.gen.css';
 
 class CustomElement extends LitElement {
   static get is() {
@@ -6,11 +7,7 @@ class CustomElement extends LitElement {
   }
 
   static get styles() {
-    return css`
-    div {
-      color: red;
-    }
-    `
+    return [style];
   }
 
   render() {
